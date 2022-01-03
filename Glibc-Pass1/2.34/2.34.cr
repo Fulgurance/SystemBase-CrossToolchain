@@ -17,30 +17,59 @@ class Target < ISM::Software
             ;;
         esac`
 
-        Dir.mkdir("build")
-        Dir.cd("build")
+        Dir.mkdir(  Ism.settings.sourcesPath + "/" + 
+                    @information.versionName + "/" +
+                    @mainSourceDirectoryName + "/" +
+                    "build")
     end
 
     def configure
         super
-        Process.run("../configure",args: [  "--prefix=/usr",
+        Process.run("../configure", args: [ "--prefix=/usr",
                                             "--host=#{Ism.settings.target}",
                                             "--build=$(../scripts/config.guess)",
                                             "--enable-kernel=3.2",
                                             "--with-headers=#{Ism.settings.rootPath}/usr/include",
-                                            "libc_cv_slibdir=/usr/lib"],output: :inherit)
+                                            "libc_cv_slibdir=/usr/lib"],
+                                    output: :inherit,
+                                    chdir:  Ism.settings.sourcesPath + "/" + 
+                                            @information.versionName + "/" +
+                                            @mainSourceDirectoryName + "/" +
+                                            "build")
     end
     
     def build
         super
-        Process.run("make",args: [Ism.settings.makeOptions],output: :inherit)
+        Process.run("make", args:   [Ism.settings.makeOptions],
+                            output: :inherit,
+                            chdir:  Ism.settings.sourcesPath + "/" + 
+                                    @information.versionName + "/" +
+                                    @mainSourceDirectoryName + "/" +
+                                    "build")
     end
     
     def install
         super
-        Process.run("make",args: [Ism.settings.makeOptions,"DESTDIR=#{Ism.settings.rootPath}","install"],output: :inherit)
-        Process.run("sed",args: ["'/RTLDLIST=/s@/usr@@g'","-i","#{Ism.settings.rootPath}/usr/bin/ldd"],output: :inherit)
-        Process.run("#{Ism.settings.rootPath}/tools/libexec/gcc/#{Ism.settings.target}/11.2.0/install-tools/mkheaders",output: :inherit)
+        Process.run("make", args: [Ism.settings.makeOptions,"DESTDIR=#{Ism.settings.rootPath}","install"],
+                            output: :inherit,
+                            chdir:  Ism.settings.sourcesPath + "/" + 
+                                    @information.versionName + "/" +
+                                    @mainSourceDirectoryName + "/" +
+                                    "build")
+                                    
+        Process.run("sed",  args: ["'/RTLDLIST=/s@/usr@@g'","-i","#{Ism.settings.rootPath}/usr/bin/ldd"],
+                            output: :inherit,
+                            chdir:  Ism.settings.sourcesPath + "/" + 
+                                    @information.versionName + "/" +
+                                    @mainSourceDirectoryName + "/" +
+                                    "build")
+
+        Process.run("#{Ism.settings.rootPath}/tools/libexec/gcc/#{Ism.settings.target}/11.2.0/install-tools/mkheaders",
+                            output: :inherit,
+                            chdir:  Ism.settings.sourcesPath + "/" + 
+                                    @information.versionName + "/" +
+                                    @mainSourceDirectoryName + "/" +
+                                    "build")
     end
 
 end

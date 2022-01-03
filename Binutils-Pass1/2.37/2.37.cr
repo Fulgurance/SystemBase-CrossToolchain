@@ -9,27 +9,44 @@ class Target < ISM::Software
 
     def prepare
         super
-        Dir.mkdir("build")
-        Dir.cd("build")
+        Dir.mkdir(  Ism.settings.sourcesPath + "/" + 
+                    @information.versionName + "/" +
+                    @mainSourceDirectoryName + "/" +
+                    "build")
     end
     
     def configure
         super
-        Process.run("../configure",args: [  "--prefix=#{Ism.settings.toolsPath}", 
+        Process.run("../configure", args: [  "--prefix=#{Ism.settings.toolsPath}", 
                                             "--with-sysroot=#{Ism.settings.rootPath}",
                                             "--target=#{Ism.settings.target}",
                                             "--disable-nls",
-                                            "--disable-werror"],output: :inherit)
+                                            "--disable-werror"],
+                                    output: :inherit,
+                                    chdir:  Ism.settings.sourcesPath + "/" + 
+                                            @information.versionName + "/" +
+                                            @mainSourceDirectoryName + "/" +
+                                            "build")
     end
     
     def build
         super
-        Process.run("make",args: [Ism.settings.makeOptions],output: :inherit)
+        Process.run("make", args: [Ism.settings.makeOptions],
+                            output: :inherit,
+                            chdir:  Ism.settings.sourcesPath + "/" + 
+                                    @information.versionName + "/" +
+                                    @mainSourceDirectoryName + "/" +
+                                    "build")
     end
     
     def install
         super
-        Process.run("make",args: ["-j1","install"],output: :inherit)
+        Process.run("make", args: ["-j1","install"],
+                            output: :inherit,
+                            chdir:  Ism.settings.sourcesPath + "/" + 
+                                    @information.versionName + "/" +
+                                    @mainSourceDirectoryName + "/" +
+                                    "build")
     end
 
 end
