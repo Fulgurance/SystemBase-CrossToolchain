@@ -3,7 +3,7 @@ require "../../../SoftwaresLibrairies"
 class Target < ISM::Software
 
     def initialize
-        super(  "./SystemBase-CrossToolchain/Softwares/Linux-API-Headers/5.13.12/Information.json",
+        super(  "./Softwares/SystemBase-CrossToolchain/Linux-API-Headers/5.13.12/Information.json",
                 "linux-5.13.12")
     end
     
