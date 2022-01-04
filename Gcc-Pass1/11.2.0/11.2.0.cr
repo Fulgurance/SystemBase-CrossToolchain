@@ -50,8 +50,6 @@ class Target < ISM::Software
                         @mainSourceDirectoryName + "/" +
                         "mpc-1.2.1.tar.gz")
 
-        Dir.cd(@mainSourceDirectoryName)
-
         Process.run("tar",  args: ["-xf", "mpfr-4.1.0.tar.xz"],
                             output: :inherit,
                             chdir:  Ism.settings.sourcesPath + "/" + 
