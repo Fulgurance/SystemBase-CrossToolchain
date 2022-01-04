@@ -3,7 +3,7 @@ require "../../../SoftwaresLibrairies"
 class Target < ISM::Software
 
     def initialize
-        super(  "./Softwares/Libstdc++-Pass1/11.2.0/Information.json",
+        super(  "./SystemBase-CrossToolchain/Softwares/Libstdc++-Pass1/11.2.0/Information.json",
                 "gcc-11.2.0")
     end
     

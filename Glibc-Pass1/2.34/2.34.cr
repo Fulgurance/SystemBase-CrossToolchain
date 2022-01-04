@@ -3,7 +3,7 @@ require "../../../SoftwaresLibrairies"
 class Target < ISM::Software
 
     def initialize
-        super(  "./Softwares/Glibc-Pass1/2.34/Information.json",
+        super(  "./SystemBase-CrossToolchain/Softwares/Glibc-Pass1/2.34/Information.json",
                 "glibc-2.34")
     end
     
