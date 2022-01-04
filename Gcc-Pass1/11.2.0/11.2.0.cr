@@ -28,7 +28,6 @@ class Target < ISM::Software
 
         FileUtils.mv(   Ism.settings.sourcesPath + "/" + 
                         @information.versionName + "/" +
-                        @mainSourceDirectoryName + "/" +
                         "mpfr-4.1.0.tar.xz",
                         Ism.settings.sourcesPath + "/" + 
                         @information.versionName + "/" +
@@ -37,7 +36,6 @@ class Target < ISM::Software
 
         FileUtils.mv(   Ism.settings.sourcesPath + "/" + 
                         @information.versionName + "/" +
-                        @mainSourceDirectoryName + "/" +
                         "gmp-6.2.1.tar.xz",    
                         Ism.settings.sourcesPath + "/" + 
                         @information.versionName + "/" +
@@ -46,7 +44,6 @@ class Target < ISM::Software
 
         FileUtils.mv(   Ism.settings.sourcesPath + "/" + 
                         @information.versionName + "/" +
-                        @mainSourceDirectoryName + "/" +
                         "mpc-1.2.1.tar.gz",
                         Ism.settings.sourcesPath + "/" + 
                         @information.versionName + "/" +
