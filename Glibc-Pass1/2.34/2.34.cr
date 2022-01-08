@@ -1,14 +1,20 @@
 require "../../../SoftwaresLibrairies"
 
 class Target < ISM::Software
-
-    def initialize
-        super(  "./Softwares/SystemBase-CrossToolchain/Glibc-Pass1/2.34/Information.json",
-                "glibc-2.34")
-    end
     
+    def download
+        super
+        downloadSource(@downloadLinks[0])
+    end
+
+    def extract
+        super
+        extractSource("glibc-2.34.tar.xz")
+    end
+
     def prepare
         super
+        @mainSourceDirectoryName = "glibc-2.34/"
         Process.run("case", args: [ "case",
                                     "$(uname -m)",
                                     "in",
@@ -34,45 +40,27 @@ class Target < ISM::Software
                                     @information.versionName + "/" +
                                     @mainSourceDirectoryName)
 
-        Dir.mkdir(  Ism.settings.sourcesPath + "/" + 
-                    @information.versionName + "/" +
-                    @mainSourceDirectoryName + "/" +
-                    "build")
+        makeDirectory(@mainSourceDirectoryName+"build")
     end
 
     def configure
         super
-        Process.run("../configure", args: [ "--prefix=/usr",
-                                            "--host=#{Ism.settings.target}",
-                                            "--build=$(../scripts/config.guess)",
-                                            "--enable-kernel=3.2",
-                                            "--with-headers=#{Ism.settings.rootPath}/usr/include",
-                                            "libc_cv_slibdir=/usr/lib"],
-                                    output: :inherit,
-                                    chdir:  Ism.settings.sourcesPath + "/" + 
-                                            @information.versionName + "/" +
-                                            @mainSourceDirectoryName + "/" +
-                                            "build")
+        configureSource([   "--prefix=/usr",
+                            "--host=#{Ism.settings.target}",
+                            "--build=$(../scripts/config.guess)",
+                            "--enable-kernel=3.2",
+                            "--with-headers=#{Ism.settings.rootPath}/usr/include",
+                            "libc_cv_slibdir=/usr/lib"])
     end
     
     def build
         super
-        Process.run("make", args:   [Ism.settings.makeOptions],
-                            output: :inherit,
-                            chdir:  Ism.settings.sourcesPath + "/" + 
-                                    @information.versionName + "/" +
-                                    @mainSourceDirectoryName + "/" +
-                                    "build")
+        makeSource([Ism.settings.makeOptions],"build")
     end
     
     def install
         super
-        Process.run("make", args: [Ism.settings.makeOptions,"DESTDIR=#{Ism.settings.rootPath}","install"],
-                            output: :inherit,
-                            chdir:  Ism.settings.sourcesPath + "/" + 
-                                    @information.versionName + "/" +
-                                    @mainSourceDirectoryName + "/" +
-                                    "build")
+        makeSource([Ism.settings.makeOptions,"DESTDIR=#{Ism.settings.rootPath}","install"],"build")
                                     
         Process.run("sed",  args: ["'/RTLDLIST=/s@/usr@@g'","-i","#{Ism.settings.rootPath}/usr/bin/ldd"],
                             output: :inherit,

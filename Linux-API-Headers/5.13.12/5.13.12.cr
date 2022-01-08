@@ -1,28 +1,30 @@
 require "../../../SoftwaresLibrairies"
 
 class Target < ISM::Software
-
-    def initialize
-        super(  "./Softwares/SystemBase-CrossToolchain/Linux-API-Headers/5.13.12/Information.json",
-                "linux-5.13.12")
-    end
     
+    def download
+        super
+        downloadSource(@downloadLinks[0])
+    end
+
+    def extract
+        super
+        extractSource("linux-5.13.12.tar.xz")
+    end
+
+    def prepare
+        super
+        @mainSourceDirectoryName = "linux-5.13.12/"
+    end
+
     def configure
         super
-        Process.run("make", args: [Ism.settings.makeOptions, "mrproper"],
-                            output: :inherit,
-                            chdir:  Ism.settings.sourcesPath + "/" + 
-                                    @information.versionName + "/" +
-                                    @mainSourceDirectoryName)
+        configureSource([Ism.settings.makeOptions, "mrproper"])
     end
     
     def build
         super
-        Process.run("make", args: [Ism.settings.makeOptions, "headers"],
-                            output: :inherit,
-                            chdir:  Ism.settings.sourcesPath + "/" + 
-                                    @information.versionName + "/" +
-                                    @mainSourceDirectoryName)
+        makeSource([Ism.settings.makeOptions, "headers"])
     end
     
     def install
