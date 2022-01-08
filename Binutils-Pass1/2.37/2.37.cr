@@ -4,7 +4,7 @@ class Target < ISM::Software
 
     def download
         super
-        downloadSource(@downloadLinks[0])
+        downloadSource(@information.downloadLinks[0])
     end
 
     def extract
@@ -29,12 +29,12 @@ class Target < ISM::Software
     
     def build
         super
-        makeSource([Ism.settings.makeOptions],"build")
+        makeSource([Ism.settings.makeOptions])
     end
     
     def install
         super
-        makeSource(["-j1","install"],"build")
+        makeSource(["-j1","install"])
     end
 
 end

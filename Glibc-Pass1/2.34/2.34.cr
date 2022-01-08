@@ -4,7 +4,7 @@ class Target < ISM::Software
     
     def download
         super
-        downloadSource(@downloadLinks[0])
+        downloadSource(@information.downloadLinks[0])
     end
 
     def extract
@@ -55,12 +55,12 @@ class Target < ISM::Software
     
     def build
         super
-        makeSource([Ism.settings.makeOptions],"build")
+        makeSource([Ism.settings.makeOptions])
     end
     
     def install
         super
-        makeSource([Ism.settings.makeOptions,"DESTDIR=#{Ism.settings.rootPath}","install"],"build")
+        makeSource([Ism.settings.makeOptions,"DESTDIR=#{Ism.settings.rootPath}","install"])
                                     
         Process.run("sed",  args: ["'/RTLDLIST=/s@/usr@@g'","-i","#{Ism.settings.rootPath}/usr/bin/ldd"],
                             output: :inherit,

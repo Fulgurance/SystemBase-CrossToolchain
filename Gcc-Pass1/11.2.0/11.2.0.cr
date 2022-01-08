@@ -4,7 +4,7 @@ class Target < ISM::Software
     
     def download
         super
-        downloadSource(@downloadLinks[0])
+        downloadSource(@information.downloadLinks[0])
         downloadSource("https://www.mpfr.org/mpfr-4.1.0/mpfr-4.1.0.tar.xz")
         downloadSource("https://ftp.gnu.org/gnu/gmp/gmp-6.2.1.tar.xz")
         downloadSource("https://ftp.gnu.org/gnu/mpc/mpc-1.2.1.tar.gz")
@@ -76,12 +76,12 @@ class Target < ISM::Software
     
     def build
         super
-        makeSource([Ism.settings.makeOptions],"build")
+        makeSource([Ism.settings.makeOptions])
     end
     
     def install
         super
-        makeSource([Ism.settings.makeOptions, "install"],"build")
+        makeSource([Ism.settings.makeOptions, "install"])
 
         #A transformer
         Process.run("cat",  args: [  "gcc/limitx.h", 

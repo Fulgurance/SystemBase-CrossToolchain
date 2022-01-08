@@ -4,7 +4,7 @@ class Target < ISM::Software
     
     def download
         super
-        downloadSource(@downloadLinks[0])
+        downloadSource(@information.downloadLinks[0])
     end
 
     def extract
