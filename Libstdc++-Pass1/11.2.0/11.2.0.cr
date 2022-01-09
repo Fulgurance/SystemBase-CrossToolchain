@@ -21,8 +21,8 @@ class Target < ISM::Software
     def configure
         super
         configureSource([   "--host=#{Ism.settings.target}", 
-                            "-build=$(../config.guess)",
-                            "-prefix=/usr",
+                            "--build=$(../config.guess)",
+                            "--prefix=/usr",
                             "--disable-multilib",
                             "--disable-nls",
                             "--disable-libstdcxx-pch",
