@@ -9,7 +9,13 @@
   "signatureLinks": [],
   "shasumLinks": [],
   "patchesLinks": [],
-  "dependencies": [],
+  "dependencies": [
+    {
+      "name": "Binutils-Pass1",
+      "version": "2.37",
+      "options": []
+    }
+  ],
   "options": [
     {
       "name": "Multilib",
