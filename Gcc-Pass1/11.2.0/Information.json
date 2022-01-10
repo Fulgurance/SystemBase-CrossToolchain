@@ -9,12 +9,12 @@
   "signatureLinks": [],
   "shasumLinks": [],
   "patchesLinks": [],
-  "dependencies": [
+  "dependencies": [],
+  "options": [
     {
-      "name": "Binutils-Pass1",
-      "version": "2.37",
-      "options": []
+      "name": "Multilib",
+      "description": "Enable 32 bits support for multilib system",
+      "active": false
     }
-  ],
-  "options": []
+  ]
 }

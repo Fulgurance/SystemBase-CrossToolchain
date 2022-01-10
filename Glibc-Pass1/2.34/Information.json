@@ -16,5 +16,11 @@
       "options": []
     }
   ],
-  "options": []
+  "options": [
+    {
+      "name": "Multilib",
+      "information": "Enable 32 bits support for multilib system",
+      "active": false
+    }
+  ]
 }

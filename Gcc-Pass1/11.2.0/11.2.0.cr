@@ -31,6 +31,12 @@ class Target < ISM::Software
         moveFile("gmp",@mainSourceDirectoryName)
         moveFile("mpc",@mainSourceDirectoryName)
 
+        if option?("Multilib")
+
+        else
+
+        end
+        
         #A transformer
         Process.run("case", args: [ "$(uname -m)",
                                     "in",
