@@ -79,17 +79,17 @@ class Target < ISM::Software
         super
         makeSource([Ism.settings.makeOptions, "install"])
 
-        fileAppendData( "/usr/lib/gcc/#{Ism.settings.target}/#{@information.version}/install-tools/include/limits.h",
+        fileAppendData( "#{Ism.settings.rootPath}/usr/lib/gcc/#{Ism.settings.target}/#{@information.version}/install-tools/include/limits.h",
                         getFileContent( Ism.settings.sourcesPath + "/" + 
                                         @information.versionName + "/" +
                                         @mainSourceDirectoryName + 
                                         "gcc/limitx.h"))
-        fileAppendData( "/usr/lib/gcc/#{Ism.settings.target}/#{@information.version}/install-tools/include/limits.h",
+        fileAppendData( "#{Ism.settings.rootPath}/usr/lib/gcc/#{Ism.settings.target}/#{@information.version}/install-tools/include/limits.h",
                         getFileContent( Ism.settings.sourcesPath + "/" + 
                                         @information.versionName + "/" +
                                         @mainSourceDirectoryName + 
                                         "gcc/glimits.h"))
-        fileAppendData( "/usr/lib/gcc/#{Ism.settings.target}/#{@information.version}/install-tools/include/limits.h",
+        fileAppendData( "#{Ism.settings.rootPath}/usr/lib/gcc/#{Ism.settings.target}/#{@information.version}/install-tools/include/limits.h",
                         getFileContent( Ism.settings.sourcesPath + "/" + 
                                         @information.versionName + "/" +
                                         @mainSourceDirectoryName + 
