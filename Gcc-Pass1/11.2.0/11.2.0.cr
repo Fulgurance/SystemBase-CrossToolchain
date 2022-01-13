@@ -27,32 +27,22 @@ class Target < ISM::Software
         moveFile("gmp-6.2.1","gmp")
         moveFile("mpc-1.2.1","mpc")
 
-        moveFile("mpfr",@mainSourceDirectoryName)
-        moveFile("gmp",@mainSourceDirectoryName)
-        moveFile("mpc",@mainSourceDirectoryName)
+        moveFile("mpfr",@mainSourceDirectoryName+"mpfr")
+        moveFile("gmp",@mainSourceDirectoryName+"gmp")
+        moveFile("mpc",@mainSourceDirectoryName+"mpc")
 
         if option?("Multilib")
 
         else
 
         end
-        
-        #A transformer
-        Process.run("case", args: [ "$(uname -m)",
-                                    "in",
-                                    "x86_64)",
-                                    "sed",
-                                    "-e",
-                                    "'/m64=/s/lib64/lib/'",
-                                    "-i",
-                                    ".orig",
-                                    "gcc/config/i386/t-linux64",
-                                    ";;",
-                                    "esac"],
-                            output: :inherit,
-                            chdir:  Ism.settings.sourcesPath + "/" + 
-                                    @information.versionName + "/" +
-                                    @mainSourceDirectoryName)
+
+        #if option?("x86_64")
+            fileReplaceText(@mainSourceDirectoryName +
+                            "gcc/config/i386/t-linux64",
+                            "m64=../lib64",
+                            "m64=../lib")
+        #end
 
         makeDirectory(@mainSourceDirectoryName + "build")
     end
@@ -89,18 +79,21 @@ class Target < ISM::Software
         super
         makeSource([Ism.settings.makeOptions, "install"])
 
-        #A transformer
-        Process.run("cat",  args: [  "gcc/limitx.h", 
-                                    "gcc/glimits.h",
-                                    "gcc/limity.h",
-                                    ">",
-                                    "`dirname",
-                                    "$(#{Ism.settings.target}-gcc",
-                                    "-print-libgcc-file-name)`/install-tools/include/limits.h"],
-                            output: :inherit,
-                            chdir:  Ism.settings.sourcesPath + "/" + 
-                                    @information.versionName + "/" +
-                                    @mainSourceDirectoryName)
+        fileAppendData( "/usr/lib/gcc/#{Ism.settings.target}/#{@information.version}/install-tools/include/limits.h",
+                        getFileContent( Ism.settings.sourcesPath + "/" + 
+                                        @information.versionName + "/" +
+                                        @mainSourceDirectoryName + 
+                                        "gcc/limitx.h"))
+        fileAppendData( "/usr/lib/gcc/#{Ism.settings.target}/#{@information.version}/install-tools/include/limits.h",
+                        getFileContent( Ism.settings.sourcesPath + "/" + 
+                                        @information.versionName + "/" +
+                                        @mainSourceDirectoryName + 
+                                        "gcc/glimits.h"))
+        fileAppendData( "/usr/lib/gcc/#{Ism.settings.target}/#{@information.version}/install-tools/include/limits.h",
+                        getFileContent( Ism.settings.sourcesPath + "/" + 
+                                        @information.versionName + "/" +
+                                        @mainSourceDirectoryName + 
+                                        "gcc/limity.h"))
     end
 
 end
