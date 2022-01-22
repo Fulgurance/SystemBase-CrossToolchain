@@ -50,17 +50,19 @@ class Target < ISM::Software
                             "--build=$(../scripts/config.guess)",
                             "--enable-kernel=3.2",
                             "--with-headers=#{Ism.settings.rootPath}/usr/include",
-                            "libc_cv_slibdir=/usr/lib"])
+                            "libc_cv_slibdir=/usr/lib"],
+                            "build",
+                            true)
     end
     
     def build
         super
-        makeSource([Ism.settings.makeOptions])
+        makeSource([Ism.settings.makeOptions],"build")
     end
     
     def install
         super
-        makeSource([Ism.settings.makeOptions,"DESTDIR=#{Ism.settings.rootPath}","install"])
+        makeSource([Ism.settings.makeOptions,"DESTDIR=#{Ism.settings.rootPath}","install"],"build")
                                     
         Process.run("sed",  args: ["'/RTLDLIST=/s@/usr@@g'","-i","#{Ism.settings.rootPath}/usr/bin/ldd"],
                             output: :inherit,

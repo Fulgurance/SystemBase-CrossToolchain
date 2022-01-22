@@ -27,17 +27,19 @@ class Target < ISM::Software
                             "--disable-nls",
                             "--disable-libstdcxx-pch",
                             "--with-gxx-include-dir=/tools/#{Ism.settings.target}/include/c++/11.2.0"],
-                            "libstdc++-v3")
+                            "libstdc++-v3",
+                            "build",
+                            true)
     end
     
     def build
         super
-        makeSource([Ism.settings.makeOptions])
+        makeSource([Ism.settings.makeOptions],"build")
     end
     
     def install
         super
-        makeSource([Ism.settings.makeOptions,"DESTDIR=#{Ism.settings.rootPath}","install"])
+        makeSource([Ism.settings.makeOptions,"DESTDIR=#{Ism.settings.rootPath}","install"],"build")
     end
 
 end

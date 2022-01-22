@@ -67,17 +67,19 @@ class Target < ISM::Software
                             "--disable-libssp",
                             "--disable-libvtv",
                             "--disable-libstdcxx",
-                            "--enable-languages=c,c++"])
+                            "--enable-languages=c,c++"],
+                            "build",
+                            true)
     end
     
     def build
         super
-        makeSource([Ism.settings.makeOptions])
+        makeSource([Ism.settings.makeOptions],"build")
     end
     
     def install
         super
-        makeSource([Ism.settings.makeOptions, "install"])
+        makeSource([Ism.settings.makeOptions, "install"],"build")
 
         fileAppendData( "#{Ism.settings.rootPath}/usr/lib/gcc/#{Ism.settings.target}/#{@information.version}/install-tools/include/limits.h",
                         getFileContent( Ism.settings.sourcesPath + "/" + 

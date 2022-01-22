@@ -24,17 +24,19 @@ class Target < ISM::Software
                             "--with-sysroot=#{Ism.settings.rootPath}",
                             "--target=#{Ism.settings.target}",
                             "--disable-nls",
-                            "--disable-werror"])
+                            "--disable-werror"],
+                            "build",
+                            true)
     end
     
     def build
         super
-        makeSource([Ism.settings.makeOptions])
+        makeSource([Ism.settings.makeOptions],"build")
     end
     
     def install
         super
-        makeSource(["-j1","install"])
+        makeSource(["-j1","install"],"build")
     end
 
 end
