@@ -15,30 +15,13 @@ class Target < ISM::Software
     def prepare
         super
         @mainSourceDirectoryName = "glibc-2.34/"
-        Process.run("case", args: [ "case",
-                                    "$(uname -m)",
-                                    "in",
-                                    "i?86)",
-                                    "ln",
-                                    "-sfv",
-                                    "ld-linux.so.2",
-                                    "#{Ism.settings.rootPath}/lib/ld-lsb.so.3",
-                                    ";;",
-                                    "x86_64)",
-                                    "ln",
-                                    "-sfv",
-                                    "../lib/ld-linux-x86-64.so.2",
-                                    "#{Ism.settings.rootPath}/lib64",
-                                    "ln",
-                                    "-sfv",
-                                    "../lib/ld-linux-x86-64.so.2",
-                                    "#{Ism.settings.rootPath}/lib64/ld-lsb-x86-64.so.3",
-                                    ";;",
-                                    "esac"],
-                            output: :inherit,
-                            chdir:  Ism.settings.sourcesPath + "/" + 
-                                    @information.versionName + "/" +
-                                    @mainSourceDirectoryName)
+
+        makeSymbolicLink(mainWorkingDirectory+"ld-linux.so.2",
+                         "#{Ism.settings.rootPath}/lib/ld-lsb.so.3")
+        makeSymbolicLink(mainWorkingDirectory+"ld-linux.so.2",
+                         "#{Ism.settings.rootPath}/lib/ld-lsb.so.3")
+        makeSymbolicLink(mainWorkingDirectory+"ld-linux.so.2",
+                         "#{Ism.settings.rootPath}/lib/ld-lsb.so.3")
 
         makeDirectory(@mainSourceDirectoryName+"build")
     end
