@@ -1,5 +1,3 @@
-require "../../../../RequiredLibraries"
-
 class Target < ISM::Software
 
     def download
