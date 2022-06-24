@@ -17,7 +17,7 @@ class Target < ISM::Software
 
     def configure
         super
-        configureSource([Ism.settings.makeOptions, "mrproper"])
+        makeSource([Ism.settings.makeOptions, "mrproper"])
     end
     
     def build
