@@ -27,23 +27,9 @@ class Target < ISM::Software
     
     def install
         super
-        Process.run("find", args: ["usr/include","-name", "'.*'", "-delete"],
-                            output: :inherit,
-                            chdir:  Ism.settings.sourcesPath + "/" + 
-                                    @information.versionName + "/" +
-                                    @mainSourceDirectoryName)
-
-        Process.run("rm",   args: ["usr/include/Makefile"],
-                            output: :inherit,
-                            chdir:  Ism.settings.sourcesPath + "/" + 
-                                    @information.versionName + "/" +
-                                    @mainSourceDirectoryName)
-                                    
-        Process.run("cp",   args: ["-rv","usr/include", "#{Ism.settings.rootPath}"],
-                            output: :inherit,
-                            chdir:  Ism.settings.sourcesPath + "/" + 
-                                    @information.versionName + "/" +
-                                    @mainSourceDirectoryName)
+        deleteAllHiddenFilesRecursively("#{mainWorkingDirectory}usr/include")
+        deleteFile("#{mainWorkingDirectory}usr/include/Makefile")
+        FileUtils.cp_r("#{mainWorkingDirectory}usr/include", "#{Ism.settings.rootPath}")
     end
 
 end
