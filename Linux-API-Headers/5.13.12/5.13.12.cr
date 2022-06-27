@@ -29,7 +29,7 @@ class Target < ISM::Software
         super
         deleteAllHiddenFilesRecursively("#{mainWorkingDirectory}usr/include")
         deleteFile("#{mainWorkingDirectory}usr/include/Makefile")
-        FileUtils.cp_r("#{mainWorkingDirectory}usr/include", "#{Ism.settings.rootPath}")
+        copyDirectory("#{mainWorkingDirectory}usr/include", "#{Ism.settings.rootPath}/usr")
     end
 
 end
