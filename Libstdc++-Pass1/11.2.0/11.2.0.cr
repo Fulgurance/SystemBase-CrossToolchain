@@ -26,7 +26,7 @@ class Target < ISM::Software
                             "--disable-libstdcxx-pch",
                             "--with-gxx-include-dir=/tools/#{Ism.settings.target}/include/c++/11.2.0"],
                             "build",
-                            true.
+                            true,
                             "libstdc++-v3")
     end
     
